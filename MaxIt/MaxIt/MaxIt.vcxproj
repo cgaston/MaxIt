@@ -151,7 +151,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CPUPlayer.cpp" />
+    <ClCompile Include="HumanPlayer.cpp" />
     <ClCompile Include="MaxIt.cpp" />
+    <ClCompile Include="MIBoard.cpp" />
+    <ClCompile Include="Player.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CPUPlayer.h" />
+    <ClInclude Include="HumanPlayer.h" />
+    <ClInclude Include="MIBoard.h" />
+    <ClInclude Include="Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
