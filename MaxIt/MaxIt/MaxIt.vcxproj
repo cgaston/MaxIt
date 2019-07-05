@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CPUPlayer.cpp" />
+    <ClCompile Include="GlobalFunctions.cpp" />
     <ClCompile Include="HumanPlayer.cpp" />
     <ClCompile Include="MaxIt.cpp" />
     <ClCompile Include="MIBoard.cpp" />
@@ -159,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CPUPlayer.h" />
+    <ClInclude Include="GlobalFunctions.h" />
     <ClInclude Include="HumanPlayer.h" />
     <ClInclude Include="MIBoard.h" />
     <ClInclude Include="Player.h" />

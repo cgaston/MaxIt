@@ -3,6 +3,7 @@
 
 
 Player::Player()
+	: playerScore(0)
 {
 }
 
