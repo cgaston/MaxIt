@@ -121,3 +121,24 @@ bool MIBoard::isValidMove(int row, int col)
 {
 	return getAt(row, col) >= 0; //break out of loop if selection is valid
 }
+
+int MIBoard::makeMoveList(char* moveList, int rowOrCol, char playerIndex)
+{
+	int numMoves;
+	for (int i = 0; i < rowSize; i++)
+	{
+		if (playerIndex == 0) // do code if player 1's turn else do code for player 2's turn
+		{
+			if (myBoard[rowOrCol][i] >= 0)
+			{
+				moveList[numMoves++] = i;
+			}
+		}
+		else
+		{
+			if (myBoard[i][rowOrCol] >= 0)
+				moveList[numMoves++] = i;
+		}
+	}
+	return numMoves;
+}

@@ -46,7 +46,7 @@ int HumanPlayer::move(MIBoard& b1, int rowOrCol, char playerIndex)
 	do
 	{
 		selection = getUserResponse(str, accResp.substr(0, b1.getRowSize())); //get user selection
-		if (isRow) // set variable not initialized already to user pick
+		if (playerIndex == 0) // set variable not initialized already to user pick
 			colInd = selection;
 		else
 			rowInd = selection;
