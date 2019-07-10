@@ -7,6 +7,8 @@ public:
 	CPUPlayer();
 	~CPUPlayer();
 	void resetGame();
-	int move(MIBoard& b1, int rowOrCol, int isRow);
+	int move(MIBoard& b1, int rowOrCol, char playerIndex);
+private:
+	int negamax(MIBoard& b1, int score, int depth, char playerIndex, bool isInitialCase);
 };
 

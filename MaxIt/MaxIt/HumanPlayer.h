@@ -7,6 +7,6 @@ public:
 	HumanPlayer();
 	~HumanPlayer();
 	void resetGame();
-	int move(MIBoard& b1, int rowOrCol, int isRow);
+	int move(MIBoard& b1, int rowOrCol, char playerIndex);
 };
 

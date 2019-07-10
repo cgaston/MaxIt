@@ -40,11 +40,17 @@ char MIBoard::getAt(int row, int col)
 	return myBoard[row][col];
 }
 
-char MIBoard::deleteCell(int row, int col) //replaces value in board at given [row][col] with max char and returns value that was in it
+char MIBoard::doMove(int row, int col) //replaces value in board at given [row][col] and returns value that was in it
 {
 	char cellVal = myBoard[row][col];
-	myBoard[row][col] = CHAR_MAX;
-	return cellVal;
+	myBoard[row][col] |= 0x80; //turn topmost bit on to indicate that cell has been deleted
+	return cellVal - 9; //return value as an offset by 9 (we will change this value to some variable in the future)
+}
+
+char MIBoard::undoMove(int row, int col) //undos most recent move by turnin topmost bit of value in the cell off
+{
+	myBoard[row][col] &= 0x7f; //turn off topmost bit
+	return myBoard[row][col] - 9;
 }
 
 void MIBoard::displayBoard()
@@ -66,10 +72,10 @@ void MIBoard::displayBoard()
 		printf("%2d ", (r + 1));
 		for (int c = 0; c < colSize; c++)
 		{
-			if (myBoard[r][c] == CHAR_MAX)
+			if (myBoard[r][c] < 0)
 				printf("|    ");
 			else
-				printf("| %2d ", myBoard[r][c]);
+				printf("| %2d ", (myBoard[r][c] - 9) );
 		}
 		printf("|\n");
 	}
@@ -88,25 +94,30 @@ void MIBoard::initBoard() //this function initializes the game board to random n
 	{
 		for (int c = 0; c < colSize; c++)
 		{
-			myBoard[r][c] = (char)(rand() % 16);
+			myBoard[r][c] = (char)(rand() % 31);
 		}
 	}
 }
 
-bool MIBoard::noMoves(char rowOrCol, bool isRow)
+bool MIBoard::noMoves(char rowOrCol, char playerIndex)
 {
 	for (int i = 0; i < rowSize; i++) //run loop to see if a space is possible for current row and column and indicate if there was or not
 	{
-		if (isRow)
+		if (playerIndex == 0) // do code if player 1's turn else do code for player 2's turn
 		{
-			if (myBoard[rowOrCol][i] != CHAR_MAX)
+			if (myBoard[rowOrCol][i] >= 0)
 				return false;
 		}
 		else
 		{
-			if (myBoard[i][rowOrCol] != CHAR_MAX)
+			if (myBoard[i][rowOrCol] >= 0)
 				return false;
 		}
 	}
 	return true; //return true indicating no moves left in current row or column
+}
+
+bool MIBoard::isValidMove(int row, int col)
+{
+	return getAt(row, col) >= 0; //break out of loop if selection is valid
 }

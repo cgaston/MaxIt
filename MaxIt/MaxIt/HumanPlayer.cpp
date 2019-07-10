@@ -18,13 +18,13 @@ void HumanPlayer::resetGame()
 
 }
 
-int HumanPlayer::move(MIBoard& b1, int rowOrCol, int isRow)
+int HumanPlayer::move(MIBoard& b1, int rowOrCol, char playerIndex)
 {
 	const char *s1, *s2; //two strings formatted for user messages
 	char c1; // holds row or column index they must pick from
 	string accResp; // will hold list of acceptable user responses
 	int rowInd, colInd;
-	if (isRow) //set variables used to format user messages
+	if (playerIndex == 0) //set variables used to format user messages (0 indicates player 1)
 	{
 		s1 = "column";
 		s2 = "row";
@@ -50,7 +50,7 @@ int HumanPlayer::move(MIBoard& b1, int rowOrCol, int isRow)
 			colInd = selection;
 		else
 			rowInd = selection;
-		if (b1.getAt(rowInd, colInd) != CHAR_MAX) //break out of loop if selection is valid
+		if (b1.isValidMove(rowInd, colInd) ) //break out of loop if selection is valid
 			break;
 		cout << "Cell has already been taken\n";
 	} while(true);
