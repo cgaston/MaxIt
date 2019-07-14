@@ -14,7 +14,7 @@ public:
 	int getColSize();
 	bool noMoves(char rowOrCol, char playerIndex);
 	bool isValidMove(int row, int col);
-	int makeMoveList(char* moveList, int rowOrCol, char playerIndex);
+	int makeMoveList(int* moveList, int rowOrCol, char playerIndex);
 private:
 	char** myBoard;
 	int rowSize; //1 greater than the last index number of rows of board

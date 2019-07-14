@@ -18,7 +18,7 @@ void HumanPlayer::resetGame()
 
 }
 
-int HumanPlayer::move(MIBoard& b1, int rowOrCol, char playerIndex)
+int HumanPlayer::move(MIBoard& b1, int rowOrCol, char playerIndex, int /*score*/)
 {
 	const char *s1, *s2; //two strings formatted for user messages
 	char c1; // holds row or column index they must pick from

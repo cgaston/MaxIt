@@ -11,8 +11,8 @@ void playGame(Player& p1, Player& p2, MIBoard& b1);
 
 int main()
 {
-	srand(time(NULL));
-	int boardSize = getUserResponse("Enter a board size(4-9): ", "456789") + 4;
+	srand((unsigned int)time(NULL));
+	int boardSize = getUserResponse("Enter a board size(4-9): ", "3456789") + 3;
 	MIBoard m1(boardSize, boardSize);
 	Player* p1;
 	Player* p2;
@@ -24,8 +24,17 @@ int main()
 	}
 	else if (numPlayer == 1)
 	{
-		p1 = new HumanPlayer;
-		p2 = new CPUPlayer;
+		int whoFirst = getUserResponse("Do you want to go first?: ", "YN");
+		if (whoFirst == 0)
+		{
+			p1 = new HumanPlayer;
+			p2 = new CPUPlayer;
+		}
+		else
+		{
+			p1 = new CPUPlayer;
+			p2 = new HumanPlayer;
+		}
 	}
 	else
 	{
@@ -59,7 +68,7 @@ void playGame(Player& p1, Player& p2, MIBoard& b1)
 		b1.displayBoard();
 		printf("Player 1 score: %d | Player 2 score: %d\n", p1.getPlayerScore(), p2.getPlayerScore()); //Print player score before each move
 		currRowOrCol = move;
-		move = players[curPlayer]->move(b1, currRowOrCol, curPlayer); //Get move from player whos turn it is as a row or column index (0-based)
+		move = players[curPlayer]->move(b1, currRowOrCol, curPlayer, players[curPlayer]->getPlayerScore() - players[1-curPlayer]->getPlayerScore()); //Get move from player whos turn it is as a row or column index (0-based)
 		if (curPlayer == 0) //player 1 chooses columns
 		{
 			row = currRowOrCol;
@@ -72,7 +81,7 @@ void playGame(Player& p1, Player& p2, MIBoard& b1)
 		}
 		players[curPlayer]->addToScore(b1.doMove(row, col)); //make the move and add score to current players total based on return value from move function
 		curPlayer = 1 - curPlayer; //change current player from 0 to 1 or vice versa
-	} while (!b1.noMoves(currRowOrCol, curPlayer)); //play game until there are not moves left
+	} while (!b1.noMoves(move, curPlayer)); //play game until there are not moves left
 	b1.displayBoard(); //display board and players final score
 	printf("       Player 1      Player 2\n");
 	printf("Score:   %3d           %3d  \n", p1.getPlayerScore(), p2.getPlayerScore());
