@@ -3,18 +3,14 @@
 
 using namespace std;
 
-CPUPlayer::CPUPlayer()
+CPUPlayer::CPUPlayer(int depth)
+	: maxdepth(depth)
 {
 }
 
 
 CPUPlayer::~CPUPlayer()
 {
-}
-
-void CPUPlayer::resetGame()
-{
-
 }
 
 int CPUPlayer::move(MIBoard& b1, int rowOrCol, char playerIndex, int score)
@@ -32,7 +28,7 @@ int CPUPlayer::move(MIBoard& b1, int rowOrCol, char playerIndex, int score)
 		s1 = "row";
 		c1 = '1';
 	}
-	movePick = negamax(b1, score, 9, rowOrCol, playerIndex, true);
+	movePick = negamax(b1, score, maxdepth - 1, rowOrCol, playerIndex, true);
 	printf("\nCPU chose %s %c\n\n", s1.c_str(), movePick + c1);
 	return movePick;
 }
@@ -40,21 +36,29 @@ int CPUPlayer::move(MIBoard& b1, int rowOrCol, char playerIndex, int score)
 int CPUPlayer::negamax(MIBoard& b1, int score, int depth, int rowOrCol, char playerIndex, bool isInitialCase)
 {
 	int* validMoves = new int[b1.getRowSize()];
-	int row, col, cellVal, numLegalMoves, value, bestmove = 0, bestvalue = INT_MIN;
+	int row, col, cellVal, numLegalMoves, value, bestmove = 0, bestvalue = -INT_MAX;
 
+//	printf("%*sNegamax: p%i Score: %i\n", maxdepth - depth, " ", playerIndex + 1, score);
 	if (depth == 0)
 	{
+//		printf("%*sScore = %i\n", maxdepth - depth, "-", -score);
 		delete[] validMoves;
-		return -score;
+		return score;
 	}
 	numLegalMoves = b1.makeMoveList(validMoves, rowOrCol, playerIndex);
 	if (numLegalMoves == 0)
 	{
 		delete[] validMoves;
 		if (score > 0)
-			return INT_MIN;
+		{
+//			printf("%*sPlayer %i wins\n", maxdepth - depth, "-", playerIndex + 1);
+			return (maxdepth - depth) * 1000; //score * 100; // INT_MAX;
+		}
 		else if (score < 0)
-			return INT_MAX;
+		{
+//			printf("%*sPlayer %i loses\n", maxdepth - depth, "-", playerIndex + 1);
+			return (maxdepth - depth) * -1000; // score * 100; // INT_MAX;
+		}
 		return 0;
 	}
 
@@ -71,10 +75,12 @@ int CPUPlayer::negamax(MIBoard& b1, int score, int depth, int rowOrCol, char pla
 			col = rowOrCol;
 		}
 		cellVal = b1.doMove(row, col);
-		value = -negamax(b1, cellVal - score, depth - 1, validMoves[i], 1 - playerIndex, false);
+//		printf("%*sExamine move: p%i (%c, %c)\n", maxdepth-depth, "-", playerIndex + 1, '1' + row, 'A' + col);
+		value = -negamax(b1, -(score + cellVal), depth - 1, validMoves[i], 1 - playerIndex, false);
 		b1.undoMove(row, col);
 		if (value > bestvalue)
 		{
+//			printf("%*sNew best score: %i. Old = %i\n", maxdepth - depth, "-", value, bestvalue);
 			bestvalue = value;
 			bestmove = i;
 		}
@@ -82,9 +88,11 @@ int CPUPlayer::negamax(MIBoard& b1, int score, int depth, int rowOrCol, char pla
 	if (isInitialCase)
 	{
 		int temp = validMoves[bestmove];
+//		printf("%*sBest overall score for p%i: %i\n", maxdepth - depth, "-", playerIndex + 1, bestvalue);
 		delete[] validMoves;
 		return temp;
 	}
 	delete[] validMoves;
+//	printf("%*sBest score for p%i at this depth: %i\n", maxdepth - depth, "-", playerIndex + 1, bestvalue);
 	return bestvalue;
 }

@@ -6,7 +6,6 @@ class HumanPlayer
 public:
 	HumanPlayer();
 	~HumanPlayer();
-	void resetGame();
 	int move(MIBoard& b1, int rowOrCol, char playerIndex, int /*score*/);
 };
 

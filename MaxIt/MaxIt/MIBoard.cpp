@@ -110,6 +110,7 @@ bool MIBoard::noMoves(char rowOrCol, char playerIndex)
 		}
 		else
 		{
+
 			if (myBoard[i][rowOrCol] >= 0)
 				return false;
 		}

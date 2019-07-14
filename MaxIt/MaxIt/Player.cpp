@@ -11,3 +11,9 @@ Player::Player()
 Player::~Player()
 {
 }
+
+
+void Player::resetGame()
+{
+	playerScore = 0;
+}

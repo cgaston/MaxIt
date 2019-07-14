@@ -11,7 +11,7 @@ void playGame(Player& p1, Player& p2, MIBoard& b1);
 
 int main()
 {
-	srand((unsigned int)time(NULL));
+//	srand(time(NULL));
 	int boardSize = getUserResponse("Enter a board size(4-9): ", "3456789") + 3;
 	MIBoard m1(boardSize, boardSize);
 	Player* p1;
@@ -19,8 +19,8 @@ int main()
 	int numPlayer = getUserResponse("How many players do you want (1-2)?: ", "012");
 	if (numPlayer == 0)
 	{
-		p1 = new CPUPlayer;
-		p2 = new CPUPlayer;
+		p1 = new CPUPlayer(10);
+		p2 = new CPUPlayer(10);
 	}
 	else if (numPlayer == 1)
 	{
