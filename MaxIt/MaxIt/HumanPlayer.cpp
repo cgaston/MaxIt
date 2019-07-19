@@ -15,7 +15,7 @@ HumanPlayer::~HumanPlayer()
 
 void HumanPlayer::resetGame()
 {
-
+	playerScore = 0;
 }
 
 int HumanPlayer::move(MIBoard& b1, int rowOrCol, char playerIndex, int /*score*/)

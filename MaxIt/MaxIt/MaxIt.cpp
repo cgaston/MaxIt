@@ -11,7 +11,7 @@ void playGame(Player& p1, Player& p2, MIBoard& b1);
 
 int main()
 {
-	srand((unsigned int)time(NULL));
+	//srand((unsigned int)time(NULL));
 	int boardSize = getUserResponse("Enter a board size(4-9): ", "3456789") + 3;
 	MIBoard m1(boardSize, boardSize);
 	Player* p1;
