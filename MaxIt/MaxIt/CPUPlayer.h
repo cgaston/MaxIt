@@ -8,7 +8,7 @@ class CPUPlayer
 	: public Player
 {
 public:
-	CPUPlayer(int depth = 4);
+	CPUPlayer(int p, int depth = 4);
 	~CPUPlayer();
 	int move(MIBoard& b1, int rowOrCol, char playerIndex, int score);
 private:

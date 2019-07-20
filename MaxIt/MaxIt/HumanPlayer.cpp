@@ -4,7 +4,8 @@
 
 using namespace std;
 
-HumanPlayer::HumanPlayer()
+HumanPlayer::HumanPlayer(int p)
+	: Player(p)
 {
 }
 

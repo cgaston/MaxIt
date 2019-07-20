@@ -19,27 +19,27 @@ int main()
 	int numPlayer = getUserResponse("How many players do you want (1-2)?: ", "012");
 	if (numPlayer == 0)
 	{
-		p1 = new CPUPlayer(10);
-		p2 = new CPUPlayer(10);
+		p1 = new CPUPlayer(0, 10);
+		p2 = new CPUPlayer(1, 10);
 	}
 	else if (numPlayer == 1)
 	{
 		int whoFirst = getUserResponse("Do you want to go first?: ", "YN");
 		if (whoFirst == 0)
 		{
-			p1 = new HumanPlayer;
-			p2 = new CPUPlayer;
+			p1 = new HumanPlayer(0);
+			p2 = new CPUPlayer(1, 3);
 		}
 		else
 		{
-			p1 = new CPUPlayer;
-			p2 = new HumanPlayer;
+			p1 = new CPUPlayer(0, 3);
+			p2 = new HumanPlayer(1);
 		}
 	}
 	else
 	{
-		p1 = new HumanPlayer;
-		p2 = new HumanPlayer;
+		p1 = new HumanPlayer(0);
+		p2 = new HumanPlayer(1);
 	}
 
 	do

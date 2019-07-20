@@ -2,8 +2,8 @@
 
 
 
-Player::Player()
-	: playerScore(0)
+Player::Player(int p)
+	: playerScore(0), playerNum(p)
 {
 }
 
