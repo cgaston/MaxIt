@@ -4,7 +4,8 @@
 
 using namespace std;
 
-CPUPlayer::CPUPlayer()
+CPUPlayer::CPUPlayer(int pNum)
+	: pNum(pNum)
 {
 }
 
@@ -41,27 +42,41 @@ int CPUPlayer::move(MIBoard& b1, int rowOrCol, char playerIndex, int score)
 int CPUPlayer::negamax(MIBoard& b1, int score, int depth, int rowOrCol, char playerIndex, bool isInitialCase)
 {
 	printf("%*sDepth: %d | Player: %d | Score: %d | \n", 10 - depth, " ", depth, playerIndex+1, score);
-	int* validMoves = new int[b1.getRowSize()];
-	int row, col, cellVal, numLegalMoves, value, bestmove = 0, bestvalue = -INT_MAX;
+	int* validMoves = new int[b1.getRowSize()]; //create array to hold valid moves with max size being the row size of the board
+	int row, col, cellVal, numLegalMoves, value, bestmove = 0, bestvalue = -INT_MAX; //declare and initialize variables
 
-	if (depth == 0)
+	if (depth == 0) //depth has been reached
 	{
 		delete[] validMoves;
-		return score;
+		return score; //return final score of this series of moves
 	}
-	numLegalMoves = b1.makeMoveList(validMoves, rowOrCol, playerIndex);
-	if (numLegalMoves == 0) //if number of legal moves is 0, then the game has ended
+	numLegalMoves = b1.makeMoveList(validMoves, rowOrCol, playerIndex); //initialize list of legal moves and store the number of them in variable
+	if (numLegalMoves == 0) //if number of legal moves is 0, then the search thinks the game has ended
 	{
 		delete[] validMoves;
-		if (score > 0)
+		if (score > 0) 
 		{
 			printf("Player %d has won\n", playerIndex+1);
-			return score*100; // (10 - depth) * 1000;  //-INT_MAX;
+			if (playerIndex == pNum)
+			{
+				return (depth) * 1000;  //INT_MAX;//score*100; // -INT_MAX;
+			}
+			else
+			{
+				return (10 - depth) * 1000;  //INT_MAX;//score*100; // -INT_MAX;
+			}
 		}
 		else if (score < 0)
 		{
 			printf("Player %d has lost\n", playerIndex+1);
-			return score*100; // (10 - depth) * -1000; //INT_MAX;
+			if (playerIndex == pNum)
+			{
+				return (depth) * -1000;  //INT_MAX;//score*100; // -INT_MAX;
+			}
+			else
+			{
+				return (10 - depth) * 1000;  //INT_MAX;//score*100; // -INT_MAX;
+			}
 		}
 		return 0;
 	}
@@ -84,7 +99,7 @@ int CPUPlayer::negamax(MIBoard& b1, int score, int depth, int rowOrCol, char pla
 		b1.undoMove(row, col);
 		if (value > bestvalue)
 		{
-			printf("New best move found. move: %d | value: %d | oldValue: %d\n", validMoves[i], value, bestvalue);
+			printf("New best move found. player: %d | depth %d | move: %d | value: %d | oldValue: %d\n", playerIndex+1, depth, validMoves[i], value, bestvalue);
 			bestvalue = value;
 			bestmove = i;
 		}
