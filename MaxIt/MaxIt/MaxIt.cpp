@@ -11,7 +11,7 @@ void playGame(Player& p1, Player& p2, MIBoard& b1);
 
 int main()
 {
-//	srand(time(NULL));
+	srand(time(NULL));
 	int boardSize = getUserResponse("Enter a board size(4-9): ", "3456789") + 3;
 	MIBoard m1(boardSize, boardSize);
 	Player* p1;
@@ -19,20 +19,21 @@ int main()
 	int numPlayer = getUserResponse("How many players do you want (1-2)?: ", "012");
 	if (numPlayer == 0)
 	{
-		p1 = new CPUPlayer(0, 10);
-		p2 = new CPUPlayer(1, 10);
+		p1 = new CPUPlayer(0, 9);
+		p2 = new CPUPlayer(1, 9);
 	}
 	else if (numPlayer == 1)
 	{
 		int whoFirst = getUserResponse("Do you want to go first?: ", "YN");
+		int difficulty = getUserResponse("How good do you want the computer to play (1-9)", "123456789");
 		if (whoFirst == 0)
 		{
 			p1 = new HumanPlayer(0);
-			p2 = new CPUPlayer(1, 3);
+			p2 = new CPUPlayer(1, difficulty+1);
 		}
 		else
 		{
-			p1 = new CPUPlayer(0, 3);
+			p1 = new CPUPlayer(0, difficulty+1);
 			p2 = new HumanPlayer(1);
 		}
 	}
