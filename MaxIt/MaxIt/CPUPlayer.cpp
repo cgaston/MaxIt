@@ -2,8 +2,8 @@
 #include "array"
 
 
-CPUPlayer::CPUPlayer(int p, int depth)
-	: Player(p), maxdepth(depth)
+CPUPlayer::CPUPlayer(int depth)
+	: Player(), maxdepth(depth)
 {
 }
 
